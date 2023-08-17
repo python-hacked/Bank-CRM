@@ -1,0 +1,151 @@
+{%load static%}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="{% static 'resources/css/create-style.css'%}" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+    <link
+      rel="shortcut icon"
+      type="image/x-icon"
+      href="{% static 'resources/files/pics/logo.png'%}"
+    />
+    <script src="{% static 'resources/js/create-js.js'%}"></script>
+    <title>Create Account</title>
+  </head>
+  <body>
+   <header id="header">
+      <section>
+        <div id="brand"><h1>NURA Bank</h1></div>
+        <div id="buttons">
+          <input
+            type="button"
+            value="Login"
+            onclick="window.location.href='login.html'"
+          />
+          <input
+            type="button"
+            value="Create Account"
+            onclick="window.location.href='{% url 'create_account_page'%}'"
+          />
+        </div>
+        <div id="clear"></div>
+      </section>
+    </header>
+    <main>
+      <section>
+        <div class="container">
+          {%if messages%}
+          {%for i in messages%}
+          {{i}}
+          {%endfor%}
+          {%endif%}
+          <div class="create" style="margin-top:65px">
+            <p class="title"><span>Create your Account</span></p>
+            <form action="/createaccount/" method="post" enctype="multipart/form-data">
+              {% csrf_token %}
+              <div class="column">
+                <label for="email">Email Address</label>
+                <input type="email" id="email" name="email" />
+                <button id="btnsendemail" style="height:45px;border-radius:15px;width:70%;background:red;margin-top:19.5%;margin-left:15%" type="button">send otp</button>
+                <span id="msg" style="color:green"></span>
+                <label for="phone">Phone Number</label>
+                <input
+                  type="number"
+                  id="phone"
+                  name="phone"
+                  {% comment %} pattern="[0-9]{4}[0-9]{3}[0-9]{4}"
+                  placeholder="0999-888-7766" {% endcomment %}
+                  required
+                />
+                
+                <label for="username">Username</label>
+                <input type="text" id="username" name="username" required />
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" required />
+                <label for="reppassword">Repeat Password</label>
+                <input
+                  type="password"
+                  id="reppassword"
+                  name="reppassword"
+                  required
+                  {% comment %} onkeyup="check()" {% endcomment %}
+                />
+              </div>
+              <div class="column">
+                <input type="hidden" name="mailotp" id="otp"/>
+                <label for="idpic">put otp</label>
+                <input type="number"  name="Customerotp" />
+                <label for="fname">First Name</label>
+                <input type="text" id="fname" name="fname" required />
+                <label for="lname">Last Name</label>
+                <input type="text" id="lname" name="lname" required />
+                <label for="age">Age</label>
+                <input
+                  type="number"
+                  id="age"
+                  name="age"
+                  min="18"
+                  max="120"
+                  step="1"
+                  required
+                />
+                <label for="id">ID Number</label>
+                <input
+                  type="text"
+                  id="id"
+                  name="id"
+                  pattern="[0-9]{10}"
+                  required
+                />
+                <label for="idpic">ID Picture</label>
+                <input type="file" id="idpic" name="img" />
+
+
+              </div>
+              <div class="button">
+                <button type="submit">Create Account</button>
+              </div>
+            </form>
+
+            <p class="login">
+              <span
+                >Already have an Account?
+                <a href="login.html">Click here to login</a></span
+              >
+            </p>
+          </div>
+        </div>
+      </section>
+    </main>
+  </body>
+
+  <script>
+    //course form plus data.
+    $("#btnsendemail").click(function(){
+        let email = $("#email").val();
+        document.getElementById("msg").innerHTML = 'messages send in Fews seconds'
+        
+        
+  
+        $.ajax ({
+          type: "GET",
+          url: "/addemail",
+          data: {
+            emails: email
+          },
+           success: function (data) {
+           console.log(data)  
+           document.getElementById("otp").value = data.otp
+           document.getElementById("msg").innerHTML = data.msg
+          }
+      })
+      });
+  
+  
+      
+  
+  </script>
+</html>
