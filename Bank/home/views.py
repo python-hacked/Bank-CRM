@@ -74,7 +74,8 @@ def login_data(request):
             user_obj = Registration.objects.get(email=email)
             user_password = user_obj.password
             if check_password(password, user_password):
-                return redirect('/dashboard/')
+                data=Registration.objects.filter(email=email).all()
+                return render(request,'dashboard.html',{'data':data})
             else:
                 return render(request, 'login.html', {'msg': 'Password Incorrect'})
         else:

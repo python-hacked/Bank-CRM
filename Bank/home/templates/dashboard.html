@@ -42,9 +42,10 @@
                     </div>
                     <div class="name">
                       <div class="container-3">
+                        {% for i  in  data %}
                         <div class="text">
                           <p class="hello"><span>Welcome back,</span></p>
-                          <p class="fname"><span>Arad Afzali</span></p>
+                          <p class="fname"><span>{{i.fname}}</span></p>
                         </div>
                       </div>
                     </div>
@@ -68,11 +69,12 @@
                     <p style="margin-bottom: 10px">
                       <span style="font-size: 20px">Account Information</span>
                     </p>
-                    <p><span>ID: Arad_Afzali</span></p>
-                    <p><span>Email: Arad.h.a.afzali@gmail.com</span></p>
-                    <p><span>Phone Number: 09997775533</span></p>
+                    <p><span>ID: {{i.id}}</span></p>
+                    <p><span>Email: {{i.email}}</span></p>
+                    <p><span>Phone Number: {{i.phone}}</span></p>
                   </div>
                 </div>
+                {% endfor %}
               </section>
             </div>
             <div class="column-middle">
@@ -377,13 +379,13 @@
                         <div class="chip">
                           <img src="{% static "../static/files/pics/chip.png"%}" alt="" />
                         </div>
+                        {% for i in data  %}
                         <div class="name">
-                          <p><span>Arad Afzali</span></p>
+                          <p><span>{{i.uname}}</span></p>
                         </div>
                         <div class="card-num" id="card-number">
                           <p>
-                            <span>9988 </span><span> 7766 </span
-                            ><span> 5544 </span><span> 3322</span>
+                            <span>{{i.account_no}}</span>
                           </p>
                         </div>
                         <div class="card-exp-cvv">
@@ -393,6 +395,7 @@
                           </p>
                         </div>
                       </div>
+                      {% endfor %}
                     </div>
                     <div class="tools-container">
                       <div class="tools-row">
