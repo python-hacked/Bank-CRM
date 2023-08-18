@@ -21,9 +21,18 @@
     <main>
       <section>
         <div class="container">
+         
           <div class="create">
             <p class="title"><span>Create your Account</span></p>
-            <form>
+            {% if messages %}
+            {% for msg in messages %}
+               <div style="color:red; text-align:center; font-size:24px; margin-top:10%" class="alert alert-{{msg.tags}}">
+                {{msg}}
+               </div>
+            {% endfor %}
+            {% endif %}
+            <form method='post' action='registration'>
+              {% csrf_token %}
               <div class="column">
                 <label for="email">Email Address</label>
                 <input type="email" id="email" name="email" />
@@ -32,7 +41,7 @@
                   type="tel"
                   id="phone"
                   name="phone"
-                  pattern="[0-9]{4}[0-9]{3}[0-9]{4}"
+                  pattern="[0-9]{10}"
                   placeholder="0999-888-7766"
                   required
                 />
@@ -66,14 +75,14 @@
                 />
                 <label for="id">ID Number</label>
                 <input
-                  type="text"
+                  type="tel"
                   id="id"
                   name="id"
-                  pattern="[0-9]{10}"
+                  pattern="[0-9]{6}"
                   required
                 />
                 <label for="idpic">ID Picture</label>
-                <input type="file" id="idpic" name="idpic" />
+                <input type="file" id="idpic" name="idimg" />
               </div>
               <div class="button">
                 <button type="submit">Create Account</button>
@@ -83,7 +92,7 @@
             <p class="login">
               <span
                 >Already have an Account?
-                <a href="login.html">Click here to login</a></span
+                <a href="userlogin">Click here to login</a></span
               >
             </p>
           </div>

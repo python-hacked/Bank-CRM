@@ -12,7 +12,7 @@
       href="{% static 'files/pics/logo.png' %}"
     />
     <script src="{% static 'js/login-js.js' %}"></script>
-    <title>Login Page</title>
+    <title>Verify Page</title>
   </head>
   <body>
     <header>
@@ -30,17 +30,13 @@
                </div>
             {% endfor %}
             {% endif %}
-            <form method='post' action='login'>
+            <form method='post' action='verify'>
               {% csrf_token %}
-              <label for="username">Email</label>
-              <input type="text" id="username" name="email" required />
-              <label for="password">Password</label>
-              <input type="password" id="password" name="password" required />
+              <label for="password">Enter your Otp</label>
+              <input type="password" id="password" name="otp0" required />
               <button type="submit">Login</button>
             </form>
-            <p class="password">
-              <span><a href="forget.html">Forget password</a></span>
-            </p>
+            
             <p class="create">
               <span
                 >Want to Create an Account?
