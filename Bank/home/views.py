@@ -33,10 +33,12 @@ def registration(request):
         elif Registration.objects.filter(phone=phone).exists():
             return render(request, 'index.html', {'msg': 'Phone Already Exists'})
         else:
+            acc=str(phone)+str(id)
+            print(acc)
             otp = get_otp()
             Registration.objects.create(
                 email=email, fname=fname, phone=phone, lname=lname, uname=uname, Otp=otp,age=age,password=password,
-                id=id,rpassword=rpassword,idpic=idpic)
+                id=id,rpassword=rpassword,idpic=idpic,account_no=acc)
             
             subject = "OTP for Verification"
             message = f"One-Time Password is: {otp}. It is valid for 3 minutes only and can be used only once for verification. Terms and conditions apply."
@@ -58,7 +60,7 @@ def verifyotp(request):
             user.save()
             return render(request, 'login.html')
         else:
-            return render(request, 'otp.html', {'msg': 'You Enterd Otp Is Incorrect Please Enterd Valid Otp'})
+            return render(request, 'otp.html', {'msg': 'You Entered Otp Or Email Incorrect'})
 
 
 def login(request):
@@ -76,7 +78,7 @@ def login_data(request):
             else:
                 return render(request, 'login.html', {'msg': 'Password Incorrect'})
         else:
-            return render(request, 'login.html', {'msg': 'Email Already Exists'})
+            return render(request, 'login.html', {'msg': 'Email Incorrect'})
 
 
 def get_otp():
@@ -112,6 +114,8 @@ def dashboard_bill(request):
 
 def otp(request):
     return render(request,'otp.html')
+
+
 
 
 

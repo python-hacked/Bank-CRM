@@ -13,6 +13,7 @@ class Registration(models.Model):
     rpassword=models.CharField( max_length=50)
     idpic=models.ImageField(upload_to='idimg/')
     Otp = models.CharField(max_length=10)
+    account_no=models.CharField( max_length=16)
 
 
     def __str__(self) -> str:

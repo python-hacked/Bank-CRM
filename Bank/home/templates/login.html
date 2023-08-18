@@ -5,18 +5,18 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="{% static "../static/css/login-style.css"%}" />
+    <link rel="stylesheet" href="{% static "css/login-style.css"%}" />
     <link
       rel="shortcut icon"
       type="image/x-icon"
-      href="{% static "../static/files/pics/logo.png"%}"
+      href="{% static "files/pics/logo.png"%}"
     />
-    <script src="{% static "../static/js/login-js.js"%}"></script>
+    <script src="{% static "js/login-js.js"%}"></script>
     <title>Login Page</title>
   </head>
   <body>
     <header>
-      <h1 onclick="window.location.href='index.html'">Nura bank</h1>
+      <h1>Nura bank</h1>
     </header>
     <main>
       <section>
@@ -24,9 +24,12 @@
         <div class="container">
           <div class="login">
             <p class="title"><span>Login to your Account</span></p>
-            {% if msg %}
-            <h1 >{{msg}}</h1>
-            {% endif %}
+            <div align='center' style='margin-top: 15px;'>
+              {% if msg %}
+              <h1 style='font-weight: bold; font-size: 24px;'>{{msg}}</h1>
+              {% endif %}
+            </div>
+            
             <form action="/login_data/" method='POST'>
               {% csrf_token %}
               <label for="username">Email Address</label>

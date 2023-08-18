@@ -36,6 +36,7 @@
                   type="tel"
                   id="phone"
                   name="phone"
+                  pattern="[0-9]{10}"
                   placeholder="0999-888-7766"
                   required
                 />
@@ -62,16 +63,17 @@
                   type="number"
                   id="age"
                   name="age"
-                  min="18"
+                  min='18'
                   max="120"
                   step="1"
                   required
                 />
                 <label for="id">ID Number</label>
                 <input
-                  type="text"
+                  type="tel"
                   id="id"
                   name="id"
+                  pattern="[0-9]{6}"
                   required
                 />
                 <label for="idpic">ID Picture</label>
