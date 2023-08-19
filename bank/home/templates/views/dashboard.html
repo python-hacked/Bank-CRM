@@ -1,26 +1,29 @@
+
+{%load static%}
 <!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="../resources/css/dashboard-style.css" />
+    <link rel="stylesheet" href="{% static 'resources/css/dashboard-style.css'%}" />
     <link
       rel="shortcut icon"
       type="image/x-icon"
-      href="../resources/files/pics/logo.png"
+      href="{% static 'resources/files/pics/logo.png'%}"
     />
     <!-- <script src="./js/dashboard-js.js"></script> -->
     <title>Dashboard</title>
   </head>
   <body>
     <header></header>
+    
     <main>
       <section>
         <div class="container">
           <div class="ham-menu">
             <img
-              src="../resources/files/pics/hamburgur.svg"
+              src="{% static 'resources/files/pics/hamburgur.svg'%}"
               id="btn"
               alt=""
               onclick="myFunction()"
@@ -36,16 +39,18 @@
                     </div> -->
                     <div class="photo">
                       <div class="img">
-                        <img src="../resources/files/pics/user.png" alt="" />
+                        <img src="{% static 'resources/files/pics/user.png'%}" alt="" />
                       </div>
                     </div>
                     <div class="name">
+                      {% for i in data%}
                       <div class="container-3">
                         <div class="text">
-                          <p class="hello"><span>Welcome back,</span></p>
-                          <p class="fname"><span>Arad Afzali</span></p>
+                          <p class="hello"><span>Welcome &#128512;</span></p>
+                          <p class="fname"><span>{{i.first_name}}</span></p>
                         </div>
                       </div>
+                      
                     </div>
                   </div>
                 </div>
@@ -54,9 +59,9 @@
                     <p><span>Your balance is:</span></p>
                     <p>
                       <span class="money"
-                        >4932
+                        >{{i.account_balance}}
                         <span style="color: green; font-size: 50px"
-                          >$</span
+                          >₹</span
                         ></span
                       >
                     </p>
@@ -67,11 +72,11 @@
                     <p style="margin-bottom: 10px">
                       <span style="font-size: 20px">Account Information</span>
                     </p>
-                    <p><span>ID: Arad_Afzali</span></p>
-                    <p><span>Email: Arad.h.a.afzali@gmail.com</span></p>
-                    <p><span>Phone Number: 09997775533</span></p>
+                    <p><span>ID: {{i.id_number}}</span></p>
+                    <p><span>Email: {{i.email}}</span></p>
+                    <p><span>Phone Number: {{i.phone}}</span></p>
                   </div>
-                </div>
+                </div> {%endfor%}
               </section>
             </div>
             <div class="column-middle">
@@ -83,277 +88,35 @@
                     </div>
                     <div class="trans-info">
                       <div class="history">
+                        {%for j in account_data%}
                         <div class="element">
-                          <p>
-                            <span class="reason">Deposit</span
-                            ><span class="flash"
-                              ><img src="../resources/files/pics/down.svg" alt=""
-                            /></span>
+                          <p>{% if j.transaction_type == 'Debit' %}
+                            <span class="reason" style="color:red">{{j.transaction_type}}</span
+                              >
+                            {%else%}
+                            <span class="reason" style="color:green">{{j.transaction_type}}</span
+                              >
+                            {%endif%}
+                            <span class="flash">
+                            
+                              {% if j.transaction_type == 'Debit' %}
+                              <img src="{% static 'resources/files/pics/up.svg'%}" alt=""/>
+                              {%else%}
+                              <img src="{% static 'resources/files/pics/down.svg'%}" alt=""/>
+                             {%endif%}
+                            </span>
                           </p>
                           <p>
-                            <span class="date">24/6/2022</span
-                            ><span class="money"
-                              >3000 <span style="color: green">$</span></span
+                            <span class="date">{{j.created_at}}</span>
+                            <span class="money"
+                              >{{j.transaction_amount}} <span style="color: green">₹</span></span
                             >
                           </p>
+                          <p><span>Reamaning Amount: {{j.account_update_balance}}</span></p>
                           <hr />
                         </div>
-                        <div class="element">
-                          <p>
-                            <span class="reason">Transfer</span
-                            ><span class="flash"
-                              ><img src="../resources/files/pics/up.svg" alt=""
-                            /></span>
-                          </p>
-                          <p>
-                            <span class="date">24/6/2019</span
-                            ><span class="money"
-                              >460 <span style="color: green">$</span></span
-                            >
-                          </p>
-                          <hr />
-                        </div>
-                        <div class="element">
-                          <p>
-                            <span class="reason">Transfer</span
-                            ><span class="flash"
-                              ><img src="../resources/files/pics/up.svg" alt=""
-                            /></span>
-                          </p>
-                          <p>
-                            <span class="date">24/6/2019</span
-                            ><span class="money"
-                              >500 <span style="color: green">$</span></span
-                            >
-                          </p>
-                          <hr />
-                        </div>
-                        <div class="element">
-                          <p>
-                            <span class="reason">Deposit</span
-                            ><span class="flash"
-                              ><img src="../resources/files/pics/down.svg" alt=""
-                            /></span>
-                          </p>
-                          <p>
-                            <span class="date">24/6/2019</span
-                            ><span class="money"
-                              >500 <span style="color: green">$</span></span
-                            >
-                          </p>
-                          <hr />
-                        </div>
-                        <div class="element">
-                          <p>
-                            <span class="reason">Shopping</span
-                            ><span class="flash"
-                              ><img src="../resources/files/pics/up.svg" alt=""
-                            /></span>
-                          </p>
-                          <p>
-                            <span class="date">24/6/2019</span
-                            ><span class="money"
-                              >500 <span style="color: green">$</span></span
-                            >
-                          </p>
-                          <hr />
-                        </div>
-                        <div class="element">
-                          <p>
-                            <span class="reason">Deposit</span
-                            ><span class="flash"
-                              ><img src="../resources/files/pics/up.svg" alt=""
-                            /></span>
-                          </p>
-                          <p>
-                            <span class="date">24/6/2019</span
-                            ><span class="money"
-                              >500 <span style="color: green">$</span></span
-                            >
-                          </p>
-                          <hr />
-                        </div>
-                        <div class="element">
-                          <p>
-                            <span class="reason">Deposit</span
-                            ><span class="flash"
-                              ><img src="../resources/files/pics/down.svg" alt=""
-                            /></span>
-                          </p>
-                          <p>
-                            <span class="date">24/6/2022</span
-                            ><span class="money"
-                              >3000 <span style="color: green">$</span></span
-                            >
-                          </p>
-                          <hr />
-                        </div>
-                        <div class="element">
-                          <p>
-                            <span class="reason">Transfer</span
-                            ><span class="flash"
-                              ><img src="../resources/files/pics/up.svg" alt=""
-                            /></span>
-                          </p>
-                          <p>
-                            <span class="date">24/6/2019</span
-                            ><span class="money"
-                              >460 <span style="color: green">$</span></span
-                            >
-                          </p>
-                          <hr />
-                        </div>
-                        <div class="element">
-                          <p>
-                            <span class="reason">Transfer</span
-                            ><span class="flash"
-                              ><img src="../resources/files/pics/up.svg" alt=""
-                            /></span>
-                          </p>
-                          <p>
-                            <span class="date">24/6/2019</span
-                            ><span class="money"
-                              >500 <span style="color: green">$</span></span
-                            >
-                          </p>
-                          <hr />
-                        </div>
-                        <div class="element">
-                          <p>
-                            <span class="reason">Deposit</span
-                            ><span class="flash"
-                              ><img src="../resources/files/pics/down.svg" alt=""
-                            /></span>
-                          </p>
-                          <p>
-                            <span class="date">24/6/2019</span
-                            ><span class="money"
-                              >500 <span style="color: green">$</span></span
-                            >
-                          </p>
-                          <hr />
-                        </div>
-                        <div class="element">
-                          <p>
-                            <span class="reason">Shopping</span
-                            ><span class="flash"
-                              ><img src="../resources/files/pics/up.svg" alt=""
-                            /></span>
-                          </p>
-                          <p>
-                            <span class="date">24/6/2019</span
-                            ><span class="money"
-                              >500 <span style="color: green">$</span></span
-                            >
-                          </p>
-                          <hr />
-                        </div>
-                        <div class="element">
-                          <p>
-                            <span class="reason">Deposit</span
-                            ><span class="flash"
-                              ><img src="../resources/files/pics/up.svg" alt=""
-                            /></span>
-                          </p>
-                          <p>
-                            <span class="date">24/6/2019</span
-                            ><span class="money"
-                              >500 <span style="color: green">$</span></span
-                            >
-                          </p>
-                          <hr />
-                        </div>
-                        <div class="element">
-                          <p>
-                            <span class="reason">Deposit</span
-                            ><span class="flash"
-                              ><img src="../resources/files/pics/down.svg" alt=""
-                            /></span>
-                          </p>
-                          <p>
-                            <span class="date">24/6/2022</span
-                            ><span class="money"
-                              >3000 <span style="color: green">$</span></span
-                            >
-                          </p>
-                          <hr />
-                        </div>
-                        <div class="element">
-                          <p>
-                            <span class="reason">Transfer</span
-                            ><span class="flash"
-                              ><img src="../resources/files/pics/up.svg" alt=""
-                            /></span>
-                          </p>
-                          <p>
-                            <span class="date">24/6/2019</span
-                            ><span class="money"
-                              >460 <span style="color: green">$</span></span
-                            >
-                          </p>
-                          <hr />
-                        </div>
-                        <div class="element">
-                          <p>
-                            <span class="reason">Transfer</span
-                            ><span class="flash"
-                              ><img src="../resources/files/pics/up.svg" alt=""
-                            /></span>
-                          </p>
-                          <p>
-                            <span class="date">24/6/2019</span
-                            ><span class="money"
-                              >500 <span style="color: green">$</span></span
-                            >
-                          </p>
-                          <hr />
-                        </div>
-                        <div class="element">
-                          <p>
-                            <span class="reason">Deposit</span
-                            ><span class="flash"
-                              ><img src="../resources/files/pics/down.svg" alt=""
-                            /></span>
-                          </p>
-                          <p>
-                            <span class="date">24/6/2019</span
-                            ><span class="money"
-                              >500 <span style="color: green">$</span></span
-                            >
-                          </p>
-                          <hr />
-                        </div>
-                        <div class="element">
-                          <p>
-                            <span class="reason">Shopping</span
-                            ><span class="flash"
-                              ><img src="../resources/files/pics/up.svg" alt=""
-                            /></span>
-                          </p>
-                          <p>
-                            <span class="date">24/6/2019</span
-                            ><span class="money"
-                              >500 <span style="color: green">$</span></span
-                            >
-                          </p>
-                          <hr />
-                        </div>
-                        <div class="element">
-                          <p>
-                            <span class="reason">Deposit</span
-                            ><span class="flash"
-                              ><img src="../resources/files/pics/up.svg" alt=""
-                            /></span>
-                          </p>
-                          <p>
-                            <span class="date">24/6/2019</span
-                            ><span class="money"
-                              >500 <span style="color: green">$</span></span
-                            >
-                          </p>
-                          <hr />
-                        </div>
-
+                        
+                          {%endfor%}
 
                       </div>
                     </div>
@@ -374,16 +137,15 @@
                           <p><span>Nura Bank</span></p>
                         </div>
                         <div class="chip">
-                          <img src="../resources/files/pics/chip.png" alt="" />
-                        </div>
+                          <img src="{% static 'resources/files/pics/chip.png'%}" alt="" />
+                        </div>{% for i in data%}
                         <div class="name">
-                          <p><span>Arad Afzali</span></p>
+                          <p><span>{{i.first_name}} {{i.last_name}}</span></p>
                         </div>
                         <div class="card-num" id="card-number">
-                          <p>
-                            <span>9988 </span><span> 7766 </span
-                            ><span> 5544 </span><span> 3322</span>
-                          </p>
+                          <p><span>
+                            {{i.account_number}}
+                          </span></p>
                         </div>
                         <div class="card-exp-cvv">
                           <p>
@@ -396,13 +158,13 @@
                     <div class="tools-container">
                       <div class="tools-row">
                         <div class="tools-column">
-                          <div class="option" onclick="window.location.href='dashboard-transfer.html'">
+                          <div class="option" onclick="window.location.href='{% url 'transferpage' i.id %}'">
                             <script>function openPage(pageUrl) { window.open(pageUrl); } </script>
-
+                            {%endfor%}
                             <div class="container">
                               <div class="logo">
                                 <img
-                                  src="../resources/files/pics/transfer.svg"
+                                  src="{% static 'resources/files/pics/transfer.svg'%}"
                                   alt=""
                                 />
                               </div>
@@ -412,7 +174,7 @@
                           <div class="option" onclick="window.location.href='dashboard-bill.html'">
                             <div class="container">
                               <div class="logo">
-                                <img src="../resources/files/pics/bill.svg" alt="">
+                                <img src="{% static 'resources/files/pics/bill.svg'%}" alt="">
                               </div>
                               <div class="text"><p>Bill</p></div>
                             </div>
@@ -420,7 +182,7 @@
                           <div class="option" onclick="window.location.href='dashboard-chargesim.html'">
                             <div class="container">
                               <div class="logo">
-                                <img src="../resources/files/pics/simcard.svg" alt="">
+                                <img src="{% static 'resources/files/pics/simcard.svg'%}" alt="">
                               </div>
                               <div class="text"><p>Charge Sim</p></div>
                             </div>
@@ -429,7 +191,7 @@
                             <script>function openPage(pageUrl) { window.open(pageUrl); } </script>
                             <div class="container">
                               <div class="logo">
-                                <img src="../resources/files/pics/bot.svg" alt="">
+                                <img src="{% static 'resources/files/pics/bot.svg'%}" alt="">
                               </div>
                               <div class="text"><p>Support Bot</p></div>
                             </div>
@@ -439,7 +201,7 @@
                           <div class="option" id="copy-card">
                             <div class="container">
                               <div class="logo">
-                                <img src="../resources/files/pics/copy.svg" alt="">
+                                <img src="{% static 'resources/files/pics/copy.svg'%}" alt="">
                               </div>
                               <div class="text"><p>Copy Card Number</p></div>
                             </div>
@@ -448,7 +210,7 @@
                           <div class="option" onclick="window.location.href='dashboard-onlinepass.html'">
                             <div class="container">
                               <div class="logo">
-                                <img src="../resources/files/pics/password.svg" alt="">
+                                <img src="{% static 'resources/files/pics/password.svg'%}" alt="">
                               </div>
                               <div class="text"><p>Online Password</p></div>
                             </div>
@@ -456,7 +218,7 @@
                           <div class="option" onclick="window.location.href='dashboard-disable.html'">
                             <div class="container">
                               <div class="logo">
-                                <img src="../resources/files/pics/disable.svg" alt="">
+                                <img src="{% static 'resources/files/pics/disable.svg'%}" alt="">
                               </div>
                               <div class="text"><p>Disable Account</p></div>
                             </div>
@@ -464,7 +226,7 @@
                           <div class="option" onclick="window.location.href='dashboard-more.html'">
                             <div class="container">
                               <div class="logo">
-                                <img src="../resources/files/pics/more.svg" alt="">
+                                <img src="{% static 'resources/files/pics/more.svg'%}" alt="">
                               </div>
                               <div class="text"><p>More</p></div>
                             </div>
@@ -481,6 +243,6 @@
       </section>
     </main>
     <footer></footer>
-    <script src="../resources/js/dashboard-js.js" defer></script>
+    <script src="{% static 'resources/js/dashboard-js.js'%}" defer></script>
   </body>
 </html>
