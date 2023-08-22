@@ -24,6 +24,7 @@ class Account_maintain(models.Model):
     created_at = models.DateTimeField(auto_now=True)
     transaction_type=models.CharField(max_length=100)
     account_update_balance=models.IntegerField(default=0)
+    reason = models.CharField(default="",max_length=150)
     def __str__(self) -> str:
         return self.coustmer.username
 

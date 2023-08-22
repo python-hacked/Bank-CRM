@@ -1,14 +1,15 @@
+{%load static%}
 <!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="../resources/css/dashboard-style.css" />
+    <link rel="stylesheet" href="{% static 'resources/css/dashboard-style.css'%}" />
     <link
       rel="shortcut icon"
       type="image/x-icon"
-      href="../resources/files/pics/logo.png"
+      href="{% static 'resources/files/pics/logo.png'%}"
     />
     <!-- <script src="./js/dashboard-js.js"></script> -->
     <title>Dashboard</title>
@@ -20,7 +21,7 @@
         <div class="container">
           <div class="ham-menu">
             <img
-              src="../resources/files/pics/hamburgur.svg"
+              src="{% static 'resources/files/pics/hamburgur.svg'%}"
               id="btn"
               alt=""
               onclick="myFunction()"
@@ -28,7 +29,7 @@
           </div>
           <div class="home-button">
             <img
-              src="../resources/files/pics/home.svg"
+              src="{% static 'resources/files/pics/home.svg'%}"
               id="btn"
               alt=""
               onclick="window.location.href='dashboard.html'"
@@ -44,7 +45,7 @@
                     </div> -->
                     <div class="photo">
                       <div class="img">
-                        <img src="../resources/files/pics/user.png" alt="" />
+                        <img src="{% static 'resources/files/pics/user.png'%}" alt="" />
                       </div>
                     </div>
                     <div class="name">
@@ -91,16 +92,20 @@
                     </div>
                     <div class="trans-info">
                       <div class="container">
-                        <form>
+                        {%for i in data%}
+                        <form action="{% url 'chargesimreal'%}" method="post">
+                          {% csrf_token %}
                           <label for="amount">Charge amount</label>
+                          <input type="hidden" id="charge" name="id" value="{{i.id}}" required />
                           <input type="number" id="charge" name="charge" required />
                           <div class="dollor-sign">
                           <p><span>$</span></p>
                           </div>
                           <label for="Phone-num">Phone Number</label>
-                          <input type="number" id="Phone-num" name="Phone-num" placeholder="0999-888-7766" required />
+                          <input type="number" id="Phone-num" name="Phonenum" placeholder="0999-888-7766" required />
                           <button type="submit">Charge</button>
                         </form>
+                        {%endfor%}
                       </div>
 
                     </div>

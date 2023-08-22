@@ -12,4 +12,6 @@ urlpatterns = [
     path('dashbord/',views.dashbord,name="dashbord"),
     path('transferpage/<int:pk>',views.transferpage,name="transferpage"),
     path('transfermoney/',views.transfermoney,name="transfermoney"),
+    path('chargesim/<int:pk>',views.chargesim,name="chargesim"),
+    path('chargesimreal/',views.chargesimreal,name="chargesimreal"),
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

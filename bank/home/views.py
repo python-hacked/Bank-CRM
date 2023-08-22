@@ -148,6 +148,29 @@ def transfermoney(request):
                 return render(request,'views/dashboard-transfer.html',{'data':data,'account_data':account_data,'error':error})
 
 
+def chargesim(request,pk):
+    data=Register_user.objects.filter(Q(id=pk)).all()
+    return render(request,'views/dashboard-chargesim.html',{'data':data})
+
+def chargesimreal(request):
+    id=request.POST.get('id')
+    charge_amount=int(request.POST.get('charge'))
+    Phonenum=request.POST.get('Phonenum')
+    sender=Register_user.objects.get(id=id)
+    sender_id=sender.id
+    sender_account_balance=sender.account_balance
+    if sender_account_balance >=charge_amount:
+        sender_change_balance = sender_account_balance - charge_amount
+        sender_reamaing_amount = sender_account_balance - charge_amount
+        phone_reason="mobile recharge"
+        Register_user.objects.filter(id=sender_id).update(account_balance=sender_change_balance)
+        Account_maintain.objects.create(coustmer=sender,reason=phone_reason,transaction_amount=charge_amount,transaction_type="Debit",account_update_balance=sender_reamaing_amount)
+        print(Phonenum,id)
+        data=Register_user.objects.filter(Q(id=id)).all()
+        userdata=Register_user.objects.get(id=id)
+        account_data=Account_maintain.objects.filter(Q(coustmer=userdata)).all().order_by('-id') 
+        return render(request,'views/dashboard.html',{'data':data,'account_data':account_data})
+       
 def dashbord(request):
     # user_id=id
     # print(user_id)
