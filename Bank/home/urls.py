@@ -16,7 +16,8 @@ urlpatterns = [
     path('otp/',views.otp,name='otp'),
     path('registration/', views.registration, name='registration'),
     path('verify-otp/', views.verifyotp),
-
     path('login_data/', views.login_data, name='login_data'),
+    path('transferpage/<int:pk>',views.transferpage,name="transferpage"),
+    path('transfermoney/',views.transfermoney,name="transfermoney"),
 
 ]+static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)

@@ -395,14 +395,14 @@
                           </p>
                         </div>
                       </div>
-                      {% endfor %}
+                      
                     </div>
                     <div class="tools-container">
                       <div class="tools-row">
                         <div class="tools-column">
-                          <div class="option" onclick="window.location.href='/dashboard_transfer/'">
+                          <div class="option" onclick="window.location.href='{% url 'transferpage' i.id %}'">
                             <script>function openPage(pageUrl) { window.open(pageUrl); } </script>
-
+                           
                             <div class="container">
                               <div class="logo">
                                 <img
@@ -412,7 +412,7 @@
                               </div>
                               <div class="text"><p>Transfer</p></div>
                             </div>
-                          </div>
+                          </div>{% endfor %}
                           <div class="option" onclick="window.location.href='/dashboard_bill/'">
                             <div class="container">
                               <div class="logo">

@@ -1,10 +1,11 @@
 from django.shortcuts import render,redirect
-from .models import Registration
+from .models import Registration,Account_maintain
 from django.http import HttpResponse
 from django.contrib import messages
 from django.contrib.auth.hashers import make_password, check_password
 import math
 import random
+from django.db.models import Q
 from django.conf import settings
 from django.core.mail import send_mail
 
@@ -38,7 +39,7 @@ def registration(request):
             otp = get_otp()
             Registration.objects.create(
                 email=email, fname=fname, phone=phone, lname=lname, uname=uname, Otp=otp,age=age,password=password,
-                id=id,rpassword=rpassword,idpic=idpic,account_no=acc)
+                numberids=id,rpassword=rpassword,idpic=idpic,account_no=acc)
             
             subject = "OTP for Verification"
             message = f"One-Time Password is: {otp}. It is valid for 3 minutes only and can be used only once for verification. Terms and conditions apply."
@@ -117,6 +118,49 @@ def otp(request):
     return render(request,'otp.html')
 
 
+def transferpage(request,pk):
+    print(pk)
+    data=Registration.objects.filter(Q(id=pk)).all()
+    account_data=Account_maintain.objects.filter(Q(id=pk)).all()
+    return render(request,'dashboard-transfer.html',{'data':data,'account_data':account_data})
+
+def transfermoney(request):
+    if request.method=="POST":
+        id=request.POST['id']
+        money=request.POST['money']
+        money=int(money)
+        accountnum=request.POST['accountnum']
+        sender=Registration.objects.get(id=id)
+        sender_id=sender.id
+        sender_account_balance=sender.account_balance
+        reciver_check=Registration.objects.filter(account_no=accountnum).exists()
+        if  reciver_check is True:
+            if sender_account_balance >= money:
+                reciver=Registration.objects.get(account_no=accountnum)
+                reciver_id=reciver.id
+                reciver_accountnum_balance=reciver.account_balance
+                reciver_change_balance = reciver_accountnum_balance + money
+                sender_change_balance = sender_account_balance - money
+                Registration.objects.filter(id=reciver_id).update(account_balance=reciver_change_balance)
+                Registration.objects.filter(id=sender_id).update(account_balance=sender_change_balance)
+                #history work
+                sender_reamaing_amount=sender_account_balance-money
+                reciver_reamaing_amount=reciver_accountnum_balance + money
+                Account_maintain.objects.create(coustmer=sender,transaction_amount=money,transaction_type="Debit",account_update_balance=sender_reamaing_amount)
+                Account_maintain.objects.create(coustmer=reciver,transaction_amount=money,transaction_type="Creadit",account_update_balance=reciver_reamaing_amount)
+                data=Registration.objects.filter(Q(id=sender_id)).all()
+                account_data=Account_maintain.objects.filter(Q(id=sender_id)).all()
+                return render(request,'dashboard-transfer.html',{'data':data,'account_data':account_data})
+            else:
+                error="insufficent balance!"
+                data=Registration.objects.filter(Q(id=sender_id)).all()
+                account_data=Account_maintain.objects.filter(Q(id=sender_id)).all()
+                return render(request,'dashboard-transfer.html',{'data':data,'account_data':account_data,'error':error})
+        else:
+                error="Account Number Is Wrong !"
+                data=Registration.objects.filter(Q(id=sender_id)).all()
+                account_data=Account_maintain.objects.filter(Q(id=sender_id)).all()
+                return render(request,'dashboard-transfer.html',{'data':data,'account_data':account_data,'error':error})
 
 
 
