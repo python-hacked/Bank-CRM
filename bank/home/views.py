@@ -93,6 +93,7 @@ def login(request):
             pwd=user_data.password
             id=user_data.id
             if pwd==password:
+                request.session["username"]=user
                 data=Register_user.objects.filter(Q(id=id)).all()
                 userdata=Register_user.objects.get(id=id)
                 account_data=Account_maintain.objects.filter(Q(coustmer=userdata)).all().order_by('-id') 
@@ -105,7 +106,9 @@ def login(request):
             return render(request,'views/login.html')
         
 def transferpage(request,pk):
-    data=Register_user.objects.filter(Q(id=pk)).all()
+    username=request.session["username"]
+    print(username)
+    data=Register_user.objects.filter(Q(username=username)).all()
     account_data=Account_maintain.objects.filter(Q(id=pk)).all()
     return render(request,'views/dashboard-transfer.html',{'data':data,'account_data':account_data})
 

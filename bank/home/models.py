@@ -21,7 +21,7 @@ class Register_user(models.Model):
 class Account_maintain(models.Model):
     coustmer=models.ForeignKey(Register_user,on_delete=models.CASCADE)
     transaction_amount=models.IntegerField()
-    created_at = models.DateTimeField(auto_now=True)
+    created_at = models.DateTimeField(auto_now_add=True)
     transaction_type=models.CharField(max_length=100)
     account_update_balance=models.IntegerField(default=0)
     reason = models.CharField(default="",max_length=150)
